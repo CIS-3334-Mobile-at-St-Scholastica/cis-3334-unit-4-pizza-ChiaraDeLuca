@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         rbMedium = (RadioButton) findViewById(R.id.radioButtonMedium);
         rbLarge = (RadioButton) findViewById(R.id.radioButtonLarge);
 
+        rbSmall.append(" --Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.SMALL));
+        rbMedium.append(" --Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.MEDIUM));
+        rbLarge.append(" --Price: $" + pizzaOrderSystem.getPrice(Pizza.pizzaSize.LARGE));
+
         // Set up the Check Boxes
         chkbxCheese = (CheckBox) findViewById(R.id.checkBoxCheese);
         chkbxDelivery = (CheckBox) findViewById(R.id.checkBoxDeluvery);
@@ -54,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
 
     public void onClickOrder(View view) {
         // ****** For the Assignment, students need to add code here to get information from the UI widgets...
-
-        String orderDescription = pizzaOrderSystem.OrderPizza("Pepperoni", "large", false);
-
         // ****** For the Practice Activity, students need to call to OrderPizza here
         // ****** For the Assignment, students will modify the order to fit the type of pizza the user selects using the UI widgets
+        String orderDescription = pizzaOrderSystem.OrderPizza(spinnerToppings.getSelectedItem().toString(), rbSmall.isChecked() ? "small" : rbMedium.isChecked() ? "medium" : "large", chkbxCheese.isChecked());
 
         //display a pop up message for a long period of time
         Toast.makeText(getApplicationContext(), "You have ordered a "+orderDescription , Toast.LENGTH_LONG).show();
@@ -67,5 +69,6 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         // add this pizza to the textview the lists the pizzas
         txtPizzasOrdered.append(orderDescription+"\n");
 
+        pizzaOrderSystem.setDelivery(chkbxDelivery.isChecked());
     }
 }
